@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>醫砭中藥查詢</title>
+</head>
+<body>
+    <h1>醫砭中藥查詢</h1>
+
+    <form method="POST" action="/search">
+        <input type="text" name="name" placeholder="輸入藥材名稱">
+        <button type="submit">查詢</button>
+    </form>
+
+    {% if result %}
+        <h2>查詢結果</h2>
+        <table border="1">
+            <tr>
+                {% for key in result[0].keys() %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in result %}
+                <tr>
+                    {% for value in row.values() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <hr>
+
+    <h2>批量上傳 Excel 查詢</h2>
+    <form method="POST" action="/upload_excel" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx,.xls">
+        <button type="submit">上傳並下載結果</button>
+    </form>
+</body>
+</html>
